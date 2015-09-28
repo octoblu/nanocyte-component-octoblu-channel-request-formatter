@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+- '0.11'
+addons:
+  code_climate:
+    repo_token: <REPO TOKEN GOES HERE>
+before_script:
+- npm install -g codeclimate-test-reporter
+after_script:
+- codeclimate-test-reporter < coverage/lcov.info
+deploy:
+  provider: npm
+  email: serveradmin@octoblu.com
+  api_key:
+    secure: xbRCejLRA6iskL1Sx5v+2ql+qzo7oUwdDx4ZpF7WGxbOBBusXbnu6a6wx4oL20vowdIdaV8EOO7dl3CqXM3J2Z4OWwi3Z5ngmAv2P/LD2vorwgSbiqxZb5UvBSA/MXpXnc/u8awZ+3N/xvfWvYWO+vtEDxyhZlc29moHpleONwmaDIchgJaeYPGwHnzbd27QKx9voZAZCOsuSrh8yscL58EHfDu/wLRXJn6Yq/BtYMwxdcLC+0E1MbVPtZcK4qwmbzbqOAy18TRbUXBkxXf48rKAFeVa5vfHIBATutD5OyJTtChrLcLsT9JvNZzQkATe8ceFV9vI8gfcmFzPwkJ2Yg64Gd4hQRvBysFr/pZpMbm+HfBi5Srjq7uo4FIJ1qlmgLGCldxG6KQnCP/w8G3sZAOZZtopUfev9BZy/rV4ZT1RUcR+uLuzLwmpLm3zo3G+EEV8rwZaMYL1medZB0RpP+7yJ3GOegeoq17qbKLmm7+TttaYkZNshVzXe6w4WQkdXhbAdsYIXSqFio8fUH/+Lv9qNFMUV/RdRINhy5GGBgXAZvX/GQ7RurUNpL6xuIMOlYYljFrHIZsWvy3eOlvk6WFFdEWW02kS2y8yNUuigIPwVYXiYPq9lvc5KHgcyqr/xwCXZrW4fA9wUNpK8J/7sY8JFteP43GZgIcit7hPjZ4=
+  on:
+    tags: true
+    branches: true
