@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "coffee-script": "^1.10.0",
+    "lodash": "^3.10.1",
     "nanocyte-component-return-value": "^1.0.0"
   },
   "devDependencies": {
