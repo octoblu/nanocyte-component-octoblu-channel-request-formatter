@@ -8,6 +8,96 @@ describe 'OctobluChannelRequestFormatter', ->
   it 'should exist', ->
     expect(@sut).to.be.an.instanceOf ReturnValue
 
+  describe '->setting params', ->
+    describe 'bodyParams', ->
+      describe 'when called with an envelope', ->
+        it 'should return the message', ->
+          envelope =
+            config:
+              url: "ad.ams"
+              method: 'PATCH'
+              bodyParams:
+                'going.deep': 'foo'
+
+          expect(@sut.onEnvelope envelope).to.deep.equal(
+            uri: "ad.ams"
+            followAllRedirects: true
+            headers:
+              "Accept": "application/json"
+              "User-Agent": "Octoblu/1.0.0"
+              "x-li-format": "json"
+            form:
+              going:
+                deep: 'foo'
+            method: "PATCH"
+            qs: {}
+          )
+
+
+    describe 'bodyParams with hidden parameters', ->
+      describe 'when called with an envelope', ->
+        it 'should return the message', ->
+          envelope =
+            config:
+              url: "ad.ams"
+              method: 'PATCH'
+              bodyParams:
+                'going.deep': 'foo'
+              hiddenParams: [
+                name: 'super.secret'
+                value: 'agent'
+                style: 'body'
+              ]
+
+          expect(@sut.onEnvelope envelope).to.deep.equal(
+            uri: "ad.ams"
+            followAllRedirects: true
+            headers:
+              "Accept": "application/json"
+              "User-Agent": "Octoblu/1.0.0"
+              "x-li-format": "json"
+            form:
+              going:
+                deep: 'foo'
+              super:
+                secret: 'agent'
+            method: "PATCH"
+            qs: {}
+          )
+
+    describe 'querystring with hidden parameters', ->
+      describe 'when called with an envelope', ->
+        it 'should return the message', ->
+          envelope =
+            config:
+              url: "ad.ams"
+              method: 'PATCH'
+              queryParams:
+                'drill.to.the.core': 'foo'
+              hiddenParams: [
+                name: 'drill.to.the.moon'
+                value: 'moonman'
+                style: 'query'
+              ]
+
+          expect(@sut.onEnvelope envelope).to.deep.equal(
+            uri: "ad.ams"
+            followAllRedirects: true
+            headers:
+              "Accept": "application/json"
+              "User-Agent": "Octoblu/1.0.0"
+              "x-li-format": "json"
+            form: {}
+            method: "PATCH"
+            qs:
+              drill:
+                to:
+                  the:
+                    core: 'foo'
+                    moon: 'moonman'
+          )
+
+
   describe '->onEnvelope', ->
     describe 'NoAuthStrategy', ->
       describe 'when called with an envelope', ->
@@ -25,6 +115,7 @@ describe 'OctobluChannelRequestFormatter', ->
               "User-Agent": "Octoblu/1.0.0"
               "x-li-format": "json"
             method: "PATCH"
+            form: {}
             qs: {}
           )
 
@@ -51,6 +142,7 @@ describe 'OctobluChannelRequestFormatter', ->
               "User-Agent": "Octoblu/1.0.0"
               "x-li-format": "json"
             method: "PATCH"
+            form: {}
             qs: {}
             auth:
               username: 'something'
@@ -79,6 +171,7 @@ describe 'OctobluChannelRequestFormatter', ->
               "User-Agent": "Octoblu/1.0.0"
               "x-li-format": "json"
             method: "PATCH"
+            form: {}
             qs: {}
             auth:
               bearer: 'something-with-5000-calories'
@@ -109,6 +202,7 @@ describe 'OctobluChannelRequestFormatter', ->
               "User-Agent": "Octoblu/1.0.0"
               "x-li-format": "json"
             method: "PATCH"
+            form: {}
             qs:
               'korean-water-ghost': 'old-well'
               'impaled-through-the-chest': 'bar'
@@ -141,6 +235,7 @@ describe 'OctobluChannelRequestFormatter', ->
             method: "PATCH"
             auth:
               bearer: 'magical-wish-granting-orb'
+            form: {}
             qs:
               'api_key': 'infinite-wishes'
               '1-billion-in-pennies': 'space-alligator-portal'
@@ -171,6 +266,7 @@ describe 'OctobluChannelRequestFormatter', ->
               "User-Agent": "Octoblu/1.0.0"
               "x-li-format": "json"
             method: "PATCH"
+            form: {}
             qs: {}
             oauth:
               consumer_key: 'candy'
@@ -203,6 +299,7 @@ describe 'OctobluChannelRequestFormatter', ->
               "User-Agent": "Octoblu/1.0.0"
               "x-li-format": "json"
             method: "PATCH"
+            form: {}
             qs: {}
           )
 
@@ -230,6 +327,7 @@ describe 'OctobluChannelRequestFormatter', ->
               "User-Agent": "Octoblu/1.0.0"
               "x-li-format": "json"
             method: "PATCH"
+            form: {}
             qs: {}
           )
 
@@ -257,5 +355,6 @@ describe 'OctobluChannelRequestFormatter', ->
               "User-Agent": "Octoblu/1.0.0"
               "x-li-format": "json"
             method: "PATCH"
+            form: {}
             qs: {}
           )

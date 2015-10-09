@@ -87,19 +87,20 @@ class OctobluChannelRequestFormatter extends ReturnValue
     uri = @_replaceParams config.url, urlParams
 
     if config.method != 'GET'
-      bodyParams = _.cloneDeep config.bodyParams
+      _.each config.bodyParams, (value, key) =>
+        _.set bodyParams, key, value
 
       _.each hiddenBodyParams, (param) ->
-        bodyParams[param.name] = param.value
+        _.set bodyParams, param.name, param.value
 
-      if config.bodyParam != undefined and bodyParams[config.bodyParam] != undefined
+      if config.bodyParam? and bodyParams[config.bodyParam]?
         bodyParams = bodyParams[config.bodyParam]
 
     requestParams = @_generateRequestParams uri, config, bodyParams
     requestParams.qs ?= {}
 
     _.each hiddenQueryParams, (param) ->
-      requestParams.qs[param.name] = param.value
+      _.set requestParams.qs, param.name, param.value
 
     requestParams.headers = _.extend {}, requestParams.headers, headerParams
 
@@ -114,9 +115,10 @@ class OctobluChannelRequestFormatter extends ReturnValue
     parsedUri.query = ''
 
     uri = url.format(parsedUri)
-    queryParams = _.extend {},
-      parsedUri.query,
-      config.queryParams
+    queryParams = _.extend {}, parsedUri.query
+
+    _.each config.queryParams, (value, key) =>
+      _.set queryParams, key, value
 
     requestParams =
       headers:
