@@ -154,7 +154,7 @@ class OctobluChannelRequestFormatter extends ReturnValue
     return path
 
   onEnvelope: (envelope) =>
-    @buildRequestParameters envelope.config
+    @buildRequestParameters envelope.data
 
   _omitEmptyObjects: (object) =>
     _.omit object, (value) =>
