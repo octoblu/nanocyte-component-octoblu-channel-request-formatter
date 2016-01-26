@@ -1,7 +1,7 @@
 ReturnValue = require 'nanocyte-component-return-value'
 OctobluChannelRequestFormatter = require '../src/octoblu-channel-request-formatter'
 
-describe 'OctobluChannelRequestFormatter', ->
+describe 'OctobluChannelRequestFormatter (config)', ->
   beforeEach ->
     @sut = new OctobluChannelRequestFormatter
 
@@ -13,7 +13,7 @@ describe 'OctobluChannelRequestFormatter', ->
       describe 'when called with an envelope', ->
         it 'should return the message', ->
           envelope =
-            data:
+            config:
               url: "ad.ams"
               method: 'PATCH'
               bodyParams:
@@ -38,7 +38,7 @@ describe 'OctobluChannelRequestFormatter', ->
       describe 'when called with an envelope', ->
         it 'should return the message', ->
           envelope =
-            data:
+            config:
               url: "ad.ams"
               method: 'PATCH'
               bodyParams:
@@ -69,7 +69,7 @@ describe 'OctobluChannelRequestFormatter', ->
       describe 'when called with an envelope', ->
         it 'should return the message', ->
           envelope =
-            data:
+            config:
               url: "ad.ams"
               method: 'PATCH'
               queryParams:
@@ -103,7 +103,7 @@ describe 'OctobluChannelRequestFormatter', ->
       describe 'when called with an envelope', ->
         it 'should return the message', ->
           envelope =
-            data:
+            config:
               url: "ad.ams"
               method: 'PATCH'
 
@@ -123,7 +123,7 @@ describe 'OctobluChannelRequestFormatter', ->
       describe 'when called with an envelope', ->
         beforeEach ->
           envelope =
-            data:
+            config:
               url: "ad.ams"
               method: 'PATCH'
               oauth:
@@ -153,7 +153,7 @@ describe 'OctobluChannelRequestFormatter', ->
       describe 'when called with an envelope', ->
         beforeEach ->
           envelope =
-            data:
+            config:
               url: "ad.ams"
               method: 'PATCH'
               oauth:
@@ -181,7 +181,7 @@ describe 'OctobluChannelRequestFormatter', ->
       describe 'when called with an envelope', ->
         beforeEach ->
           envelope =
-            data:
+            config:
               url: "ad.ams"
               method: 'PATCH'
               oauth:
@@ -212,7 +212,7 @@ describe 'OctobluChannelRequestFormatter', ->
       describe 'when called with an envelope', ->
         beforeEach ->
           envelope =
-            data:
+            config:
               url: "ad.ams"
               method: 'PATCH'
               oauth:
@@ -245,7 +245,7 @@ describe 'OctobluChannelRequestFormatter', ->
       describe 'when called with an envelope', ->
         beforeEach ->
           envelope =
-            data:
+            config:
               url: "ad.ams"
               method: 'PATCH'
               oauth:
@@ -279,7 +279,7 @@ describe 'OctobluChannelRequestFormatter', ->
       describe 'when called with an envelope', ->
         beforeEach ->
           envelope =
-            data:
+            config:
               url: "ad.ams"
               method: 'PATCH'
               oauth:
@@ -307,7 +307,7 @@ describe 'OctobluChannelRequestFormatter', ->
       describe 'when called with an envelope', ->
         beforeEach ->
           envelope =
-            data:
+            config:
               url: "ad.ams"
               method: 'PATCH'
               oauth:
@@ -335,7 +335,7 @@ describe 'OctobluChannelRequestFormatter', ->
       describe 'when called with an envelope', ->
         beforeEach ->
           envelope =
-            data:
+            config:
               url: "ad.ams"
               method: 'PATCH'
               authHeaderKey: 'allergy'

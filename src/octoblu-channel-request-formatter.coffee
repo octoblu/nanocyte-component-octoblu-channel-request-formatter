@@ -153,8 +153,8 @@ class OctobluChannelRequestFormatter extends ReturnValue
 
     return path
 
-  onEnvelope: ({data, message}) =>
-    return {} if _.isEmpty message
+  onEnvelope: ({config, message}) =>
+    message = _.cloneDeep config if _.isEmpty message
     @buildRequestParameters message
 
   _omitEmptyObjects: (object) =>
