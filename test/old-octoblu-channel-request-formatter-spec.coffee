@@ -18,6 +18,8 @@ describe 'OctobluChannelRequestFormatter (config)', ->
               method: 'PATCH'
               bodyParams:
                 'going.deep': 'foo'
+            message:
+              something: 'hello'
 
           expect(@sut.onEnvelope envelope).to.deep.equal(
             uri: "ad.ams"
@@ -48,6 +50,8 @@ describe 'OctobluChannelRequestFormatter (config)', ->
                 value: 'agent'
                 style: 'body'
               ]
+            message:
+              something: 'hello'
 
           expect(@sut.onEnvelope envelope).to.deep.equal(
             uri: "ad.ams"

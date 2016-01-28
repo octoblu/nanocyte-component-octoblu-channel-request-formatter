@@ -13,6 +13,7 @@ describe 'OctobluChannelRequestFormatter (message)', ->
       describe 'when called with an envelope', ->
         it 'should return the message', ->
           envelope =
+            config: {}
             message:
               url: "ad.ams"
               method: 'PATCH'
