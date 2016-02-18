@@ -82,7 +82,11 @@ class OctobluChannelRequestFormatter extends ReturnValue
     hiddenQueryParams = _.filter config.hiddenParams, style: 'query'
 
 
-    defaultHeaderParams = @_generateHeaderParams config.defaultParams
+    filteredHeaderParams = _.filter config.defaultParams, style: 'header'
+    defaultHeaderParams = {}
+    _.forEach filteredHeaderParams, (header) ->
+      _.set defaultHeaderParams, header.name, header.value
+
     defaultUrlParams = _.filter config.defaultParams, style: 'url'
 
     urlParams = _.extend {}, defaultUrlParams, config.urlParams
@@ -157,11 +161,6 @@ class OctobluChannelRequestFormatter extends ReturnValue
 
     return path
 
-  _generateHeaderParams: (defaultParams) =>
-     params = _.filter defaultParams, style: 'header'
-     headers = {}
-     _.forEach params, (header) ->
-       headers[header.name] = header.value
 
   onEnvelope: ({config, message}) =>
     message = _.cloneDeep config unless message?.url?
