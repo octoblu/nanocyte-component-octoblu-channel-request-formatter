@@ -81,7 +81,11 @@ class OctobluChannelRequestFormatter extends ReturnValue
     hiddenBodyParams  = _.filter config.hiddenParams, style: 'body'
     hiddenQueryParams = _.filter config.hiddenParams, style: 'query'
 
-    urlParams = _.extend {}, config.defaultParams, config.urlParams
+
+    defaultHeaderParams = @_generateHeaderParams config.defaultParams
+    defaultUrlParams = _.filter config.defaultParams, style: 'url'
+
+    urlParams = _.extend {}, defaultUrlParams, config.urlParams
     headerParams = _.cloneDeep config.headerParams
     bodyParams = {}
     uri = @_replaceParams config.url, urlParams
@@ -102,7 +106,7 @@ class OctobluChannelRequestFormatter extends ReturnValue
     _.each hiddenQueryParams, (param) ->
       _.set requestParams.qs, param.name, param.value
 
-    requestParams.headers = _.extend {}, requestParams.headers, headerParams
+    requestParams.headers = _.extend {}, requestParams.headers, headerParams, defaultHeaderParams
 
     strategyMethod = @getStrategy config.oauth?.tokenMethod
     strategyParams = strategyMethod config, _.cloneDeep(requestParams)
@@ -152,6 +156,12 @@ class OctobluChannelRequestFormatter extends ReturnValue
       path = path.replace(re, value)
 
     return path
+
+  _generateHeaderParams: (defaultParams) =>
+     params = _.filter defaultParams, style: 'header'
+     headers = {}
+     _.forEach params, (header) ->
+       headers[header.name] = header.value
 
   onEnvelope: ({config, message}) =>
     message = _.cloneDeep config unless message?.url?
