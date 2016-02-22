@@ -1,7 +1,7 @@
 ReturnValue = require 'nanocyte-component-return-value'
 OctobluChannelRequestFormatter = require '../src/octoblu-channel-request-formatter'
 
-describe 'OctobluChannelRequestFormatter (config)', ->
+describe 'OctobluChannelRequestFormatter (message)', ->
   beforeEach ->
     @sut = new OctobluChannelRequestFormatter
 
@@ -13,13 +13,12 @@ describe 'OctobluChannelRequestFormatter (config)', ->
       describe 'when called with an envelope', ->
         it 'should return the message', ->
           envelope =
-            config:
+            config: {}
+            message:
               url: "ad.ams"
               method: 'PATCH'
               bodyParams:
                 'going.deep': 'foo'
-            message:
-              something: 'hello'
 
           expect(@sut.onEnvelope envelope).to.deep.equal(
             uri: "ad.ams"
@@ -40,7 +39,7 @@ describe 'OctobluChannelRequestFormatter (config)', ->
       describe 'when called with an envelope', ->
         it 'should return the message', ->
           envelope =
-            config:
+            message:
               url: "ad.ams"
               method: 'PATCH'
               bodyParams:
@@ -50,8 +49,6 @@ describe 'OctobluChannelRequestFormatter (config)', ->
                 value: 'agent'
                 style: 'body'
               ]
-            message:
-              something: 'hello'
 
           expect(@sut.onEnvelope envelope).to.deep.equal(
             uri: "ad.ams"
@@ -73,7 +70,7 @@ describe 'OctobluChannelRequestFormatter (config)', ->
       describe 'when called with an envelope', ->
         it 'should return the message', ->
           envelope =
-            config:
+            message:
               url: "ad.ams"
               method: 'PATCH'
               queryParams:
@@ -107,7 +104,7 @@ describe 'OctobluChannelRequestFormatter (config)', ->
       describe 'when called with an envelope', ->
         it 'should return the message', ->
           envelope =
-            config:
+            message:
               url: "ad.ams"
               method: 'PATCH'
 
@@ -127,7 +124,7 @@ describe 'OctobluChannelRequestFormatter (config)', ->
       describe 'when called with an envelope', ->
         beforeEach ->
           envelope =
-            config:
+            message:
               url: "ad.ams"
               method: 'PATCH'
               oauth:
@@ -157,7 +154,7 @@ describe 'OctobluChannelRequestFormatter (config)', ->
       describe 'when called with an envelope', ->
         beforeEach ->
           envelope =
-            config:
+            message:
               url: "ad.ams"
               method: 'PATCH'
               oauth:
@@ -185,7 +182,7 @@ describe 'OctobluChannelRequestFormatter (config)', ->
       describe 'when called with an envelope', ->
         beforeEach ->
           envelope =
-            config:
+            message:
               url: "ad.ams"
               method: 'PATCH'
               oauth:
@@ -216,7 +213,7 @@ describe 'OctobluChannelRequestFormatter (config)', ->
       describe 'when called with an envelope', ->
         beforeEach ->
           envelope =
-            config:
+            message:
               url: "ad.ams"
               method: 'PATCH'
               oauth:
@@ -249,7 +246,7 @@ describe 'OctobluChannelRequestFormatter (config)', ->
       describe 'when called with an envelope', ->
         beforeEach ->
           envelope =
-            config:
+            message:
               url: "ad.ams"
               method: 'PATCH'
               oauth:
@@ -283,7 +280,7 @@ describe 'OctobluChannelRequestFormatter (config)', ->
       describe 'when called with an envelope', ->
         beforeEach ->
           envelope =
-            config:
+            message:
               url: "ad.ams"
               method: 'PATCH'
               oauth:
@@ -311,7 +308,7 @@ describe 'OctobluChannelRequestFormatter (config)', ->
       describe 'when called with an envelope', ->
         beforeEach ->
           envelope =
-            config:
+            message:
               url: "ad.ams"
               method: 'PATCH'
               oauth:
@@ -339,7 +336,7 @@ describe 'OctobluChannelRequestFormatter (config)', ->
       describe 'when called with an envelope', ->
         beforeEach ->
           envelope =
-            config:
+            message:
               url: "ad.ams"
               method: 'PATCH'
               authHeaderKey: 'allergy'
@@ -360,5 +357,62 @@ describe 'OctobluChannelRequestFormatter (config)', ->
               "x-li-format": "json"
             method: "PATCH"
             form: {}
+            qs: {}
+          )
+
+    describe 'when no json sent', ->
+      describe 'when called with an envelope', ->
+        beforeEach ->
+          envelope =
+            message:
+              bodyFormat: 'json'
+              url: 'peter.rocks'
+              method: 'GET'
+
+          @result = @sut.onEnvelope envelope
+
+        it 'should return the message with json: true', ->
+          expect(@result).to.deep.equal(
+            uri: "peter.rocks"
+            followAllRedirects: true
+            headers:
+              'Accept': 'application/json'
+              'User-Agent': 'Octoblu/1.0.0'
+              'x-li-format': 'json'
+            method: 'GET'
+            json: true
+            qs: {}
+          )
+
+    describe 'defaultParams with headerParams', ->
+      describe 'when called with an envelope', ->
+        it 'should return the message', ->
+          envelope =
+            message:
+              url: ":batman/ad.ams"
+              method: 'PATCH'
+              bodyParams:
+                'going.deep': 'foo'
+              defaultParams: {
+                ':batman': 'lives'
+              }
+              defaultHeaderParams:{
+                dude: 'bro'
+                damn: 'son'
+              }
+
+          expect(@sut.onEnvelope envelope).to.deep.equal(
+            uri: "lives/ad.ams"
+            followAllRedirects: true
+            headers:
+              "Accept": "application/json"
+              "User-Agent": "Octoblu/1.0.0"
+              "x-li-format": "json"
+              "dude": "bro"
+              "damn": "son"
+            form:
+              going:
+                deep: 'foo'
+            method: "PATCH"
             qs: {}
           )

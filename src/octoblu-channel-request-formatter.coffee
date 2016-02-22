@@ -143,7 +143,9 @@ class OctobluChannelRequestFormatter extends ReturnValue
       delete requestParams.headers['Accept']
     else
       if config.bodyFormat == 'json'
-        requestParams.json = @_omitEmptyObjects bodyParams
+        json = @_omitEmptyObjects bodyParams
+        requestParams.json = json unless _.isEmpty(json)
+        requestParams.json = true if _.isEmpty(json)
       else
         requestParams.form = bodyParams
 
