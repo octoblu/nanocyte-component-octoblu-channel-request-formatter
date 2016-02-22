@@ -365,42 +365,27 @@ describe 'OctobluChannelRequestFormatter (message)', ->
         it 'should return the message', ->
           envelope =
             message:
-              url: "ad.ams"
+              url: ":batman/ad.ams"
               method: 'PATCH'
               bodyParams:
                 'going.deep': 'foo'
-              defaultParams: [
-                {
-                  name: "Doctor"
-                  value: "Zhivago"
-                  style: "header"
-                },
-                {
-                  name: "Batman"
-                  value: "Dies"
-                  style: "header"
-                },
-                {
-                  name: ":sup"
-                  value: "dude"
-                  style: "url"
-                },
-                {
-                  name: ":Okay"
-                  value: "Go"
-                  style: "url"
-                }
-              ]
+              defaultParams: {
+                ':batman': 'lives'
+              }
+              defaultHeaderParams:{
+                dude: 'bro'
+                damn: 'son'
+              }
 
           expect(@sut.onEnvelope envelope).to.deep.equal(
-            uri: "ad.ams"
+            uri: "lives/ad.ams"
             followAllRedirects: true
             headers:
               "Accept": "application/json"
               "User-Agent": "Octoblu/1.0.0"
               "x-li-format": "json"
-              "Doctor": "Zhivago"
-              "Batman": "Dies"
+              "dude": "bro"
+              "damn": "son"
             form:
               going:
                 deep: 'foo'
