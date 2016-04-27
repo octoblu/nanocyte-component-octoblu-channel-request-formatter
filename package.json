@@ -1,6 +1,6 @@
 {
   "name": "nanocyte-component-octoblu-channel-request-formatter",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Nanocyte component octoblu-channel-request-formatter",
   "keywords": [
     "nanocyte",
@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "coffee-script": "^1.10.0",
+    "debug": "^2.2.0",
     "lodash": "^3.10.1",
     "nanocyte-component-return-value": "^1.0.2"
   },

@@ -1,6 +1,7 @@
+_           = require 'lodash'
+url         = require 'url'
+debug       = require('debug')('nanocyte-component-octoblu-channel-request-formatter')
 ReturnValue = require 'nanocyte-component-return-value'
-_   = require 'lodash'
-url = require 'url'
 
 class OctobluChannelRequestFormatter extends ReturnValue
   BasicAuthStrategy: (config) =>
@@ -53,7 +54,6 @@ class OctobluChannelRequestFormatter extends ReturnValue
       consumer_secret: config.oauth.secret
       token:           config.oauth.access_token
       token_secret:    config.oauth.access_token_secret
-
 
   getStrategy: (tokenMethod) =>
     strategies =
@@ -109,7 +109,9 @@ class OctobluChannelRequestFormatter extends ReturnValue
 
     strategyMethod = @getStrategy config.oauth?.tokenMethod
     strategyParams = strategyMethod config, _.cloneDeep(requestParams)
-    return _.defaultsDeep {}, strategyParams, requestParams
+    params =  _.defaultsDeep {}, strategyParams, requestParams
+    debug 'return params', params
+    return params
 
   _generateRequestParams: (uri, config, bodyParams, body) =>
     # clean up querystring and place it in the queryParams
@@ -157,7 +159,6 @@ class OctobluChannelRequestFormatter extends ReturnValue
       path = path.replace(re, value)
 
     return path
-
 
   onEnvelope: ({config, message}) =>
     message = _.cloneDeep config unless message?.url?
