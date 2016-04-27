@@ -78,6 +78,8 @@ class OctobluChannelRequestFormatter extends ReturnValue
       defaultParams: {}
       dynamicParams: {}
 
+    debug "got: ", config
+
     hiddenBodyParams  = _.filter config.hiddenParams, style: 'body'
     hiddenQueryParams = _.filter config.hiddenParams, style: 'query'
 
